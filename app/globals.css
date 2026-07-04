@@ -1,26 +1,115 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+@source "./app/**/*.{ts,tsx}";
+@source "./components/**/*.{ts,tsx}";
+@source "./lib/**/*.{ts,tsx}";
+
+@custom-variant dark (&:is(.dark *));
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --radius: 0.75rem;
+
+  /* ---- Brand palette (source of truth) ---- */
+  --color-terracotta: #B8503A;
+  --color-sage: #7A8B6F;
+  --color-amber: #E0985A;
+  --color-risk: #C4523F;
+  --color-navy: #2C3E4A;
+  --color-warm-bg: #FFFFFB;
+
+  /* ---- shadcn tokens, mapped to the brand palette above ----
+     Every shadcn/ui component (Button, Card, Input, Dialog, ...)
+     reads these exact variable names. Nothing renders correctly
+     until these exist. */
+  --background: var(--color-warm-bg);
+  --foreground: var(--color-navy);
+
+  --card: #FFFFFF;
+  --card-foreground: var(--color-navy);
+
+  --popover: #FFFFFF;
+  --popover-foreground: var(--color-navy);
+
+  --primary: var(--color-terracotta);
+  --primary-foreground: #FFFFFF;
+
+  --secondary: var(--color-sage);
+  --secondary-foreground: #FFFFFF;
+
+  --accent: var(--color-amber);
+  --accent-foreground: var(--color-navy);
+
+  --destructive: var(--color-risk);
+  --destructive-foreground: #FFFFFF;
+
+  --muted: #F4F1EC;
+  --muted-foreground: #6B7178;
+
+  --border: #E7E2D9;
+  --input: #E7E2D9;
+  --ring: var(--color-terracotta);
+
+  /* Fonts */
+  --font-display: var(--font-fraunces), serif;
+  --font-sans: var(--font-inter), sans-serif;
+}
+
+/* Fill in dark-mode overrides here when/if you build a dark theme.
+   Left out entirely for now rather than guessing at values. */
+.dark {
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Brand colors also exposed directly as utilities
+     (bg-terracotta, text-sage, bg-risk, etc.) for cases where
+     you need the literal brand color rather than its semantic role. */
+  --color-terracotta: var(--color-terracotta);
+  --color-sage: var(--color-sage);
+  --color-amber: var(--color-amber);
+  --color-risk: var(--color-risk);
+  --color-navy: var(--color-navy);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+  }
 }
